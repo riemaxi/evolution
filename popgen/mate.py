@@ -10,12 +10,12 @@ def offspring(a,b):
 a = sys.stdin.readline().strip().split('\t') 
 b = sys.stdin.readline().strip().split('\t') 
 
-first_a = a 
-first_b = b 
+first_a = a[:] 
+first_b = b[:]
 
 for ind in sys.stdin:
 	offspring(a,b)
-	a = b
+	a = b[:]
 	b = ind.strip().split('\t') 
 
 offspring(a,first_b) 

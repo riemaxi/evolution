@@ -6,7 +6,7 @@ class Fitness:
 	def __init__(self, source = 'data.fitness', haplotypes = 2, default_value = 1.0):
 		self.default_value = default_value
 		self.data = self.load(source)
-
+	
 		self.total = self.total_fitness(haplotypes)
 		self.weight = self.get_weight(haplotypes)
 		self.vector = self.get_vector(haplotypes)
@@ -27,8 +27,23 @@ class Fitness:
 				weight.append(f)
 		return weight
 
-	def ok(self, indiv):
-		return numpy.random.choice( self.vector, p = self.weight) == ','.join(indiv)
+	def ok(self, indiv, weight = None):
+		try:
+			if weight != None:
+				l = len(weight)
+
+				v = []
+				w = []
+				for a,b in weight.items():
+					v.append(a)
+					w.append(b)
+			else:
+				w = self.weight
+				v = self.vector
+
+			return numpy.random.choice( v, p = w) == ','.join(indiv)
+		except:
+			return False
 		
 
 	def total_fitness(self, n):

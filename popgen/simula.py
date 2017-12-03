@@ -15,7 +15,6 @@ def fixed(haplotypes):
 
 	return instances.count(0) == len(instances) - 1
 
-
 def initialize(generation, trial):
 	os.system('./populate.sh')
 
@@ -30,7 +29,7 @@ initialize(generation, trial)
 
 while generation <= max_generation and not fixed(haplotypes):
 	os.system('./mate.sh')
-	os.system('./mutate.sh')
+	os.system('./mutate{}.sh'.format(breeding_mode))
 
 	generation += 1
 	os.system('./evolution.sh {} {}'.format(generation, trial))

@@ -16,5 +16,6 @@ for gen in sys.stdin:
 
 	frequency.append(count)
 
+print('G', report_del.join(['F{}'.format(i+1) for i in range(haplotypes)]), sep = report_del)
 for f in frequency:
-	print('\t'.join(f))
+	print(report_del.join(f))

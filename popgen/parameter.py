@@ -1,4 +1,4 @@
-trials = 10
+trials = 1
 population_size = 100
 haplotypes = 2
 ploidy = 2
@@ -9,3 +9,6 @@ max_generation = 100
 
 mutate_max = 30
 
+report_del = ','
+
+breeding_mode = '_fitness'
