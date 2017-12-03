@@ -14,3 +14,5 @@ report_del = ','
 breeding_mode = '_fitness'
 
 populate_weight = [0.2, 0.8]
+
+experiment_result = 'result'

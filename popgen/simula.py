@@ -18,11 +18,10 @@ def fixed(haplotypes):
 def initialize(generation, trial):
 	os.system('./populate.sh')
 
-	os.system('rm -f data.evolution.{}'.format(trial))
-	os.system('rm -f report.frequency.{}'.format(trial))
-	os.system('./evolution.sh {} {}'.format(generation, trial))
+	os.system('./evolution.sh {} {} {}'.format(generation, trial, destination))
 
 trial = sys.argv[1]
+destination = sys.argv[2]
 generation = 1
 
 initialize(generation, trial)
@@ -32,8 +31,8 @@ while generation <= max_generation and not fixed(haplotypes):
 	os.system('./mutate{}.sh'.format(breeding_mode))
 
 	generation += 1
-	os.system('./evolution.sh {} {}'.format(generation, trial))
+	os.system('./evolution.sh {} {} {}'.format(generation, trial, destination))
 
-	os.system('./report_frequency.sh {}'.format(trial))
+	os.system('./report_frequency.sh {} {}'.format(trial, destination))
 
 os.system('rm data.mutant data.mutant.current')

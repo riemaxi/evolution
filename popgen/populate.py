@@ -31,4 +31,3 @@ for i in range(population_size):
 	individual = create_individual(ploidy, haplotypes, populate_weight)
 
 	print('\t'.join(individual))
-
