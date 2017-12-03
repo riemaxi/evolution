@@ -12,3 +12,5 @@ mutate_max = 30
 report_del = ','
 
 breeding_mode = '_fitness'
+
+populate_weight = [0.2, 0.8]
