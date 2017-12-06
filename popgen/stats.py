@@ -6,5 +6,5 @@ def count_alleles(pop, ht_no):
 
 def frequency(pop, ht_no):
 	v, size = count_alleles(pop, ht_no)
-	return [c/size for c in v]
+	return [c/size for c in v], v, size
 

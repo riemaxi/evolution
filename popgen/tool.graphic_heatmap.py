@@ -53,7 +53,7 @@ def scorescale(mns, mxs, size):
 
 def heatmap(columns, minscore, maxscore, size):
 	data = ['<table cellspacing="0" cellpassing="0" height="500">',
-		''.join(['<td width="60" align="center">{}</td>'.format(c) for c in columns])]
+		''.join(['<td width="5" align="center">{}</td>'.format(c) for c in columns])]
 	for line in sys.stdin:
 		line = line.strip('\n').split('\t')
 		scores = [float(s) for s in line[1:]]

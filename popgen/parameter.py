@@ -9,4 +9,4 @@ genotype_weight = [0.5,0.5]
 fitness_data = 'data.fitness'
 mutation_on = False
 
-max_generations = 1000
+max_generations = 2000

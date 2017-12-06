@@ -9,6 +9,7 @@ destination = sys.argv[1] if len(sys.argv)>1 else 'experiment_{}'.format(datetim
 
 destination = result + '/' + destination
 
+os.system('rm -rf {}'.format(destination))
 os.system('mkdir -p {}'.format(destination))
 
 for trial in range(trials):
