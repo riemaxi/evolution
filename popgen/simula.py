@@ -1,38 +1,40 @@
 #!/usr/bin/env python3
 
-import os
 import sys
+import numpy
 from parameter import *
+from population import *
+from mutation import *
+from generation import *
+from stats import *
 
+def load_fitness(source):
+	data = {}
+	for line in open(source):
+		g, f = line.strip().split('\t')
+		data[g] = float(f)
 
-def fixed(haplotypes):
-	instances = [0]*haplotypes
-	for indiv in open('data.mutant'):
-		indiv = indiv.strip().split('\t') 
-		for ht in range(1,haplotypes + 1):
-			if str(ht) in indiv:
-				instances[ht-1] += 1
+	return data
 
-	return instances.count(0) == len(instances) - 1
-
-def initialize(generation, trial):
-	os.system('./populate.sh')
-
-	os.system('./evolution.sh {} {} {}'.format(generation, trial, destination))
+def fixed(pop, ht_no, end):
+	v, size = count_alleles(pop, ht_no)
+	return v.count(0) == len(v) - 1 or end
 
 trial = sys.argv[1]
-destination = sys.argv[2]
-generation = 1
+dest = sys.argv[2]
+report = '{}/report.frequency'.format(dest)
 
-initialize(generation, trial)
+fitness = load_fitness(fitness_data)
+pop = population(pop_size, ploidy, haplotype_no, genotype_weight)
 
-while generation <= max_generation and not fixed(haplotypes):
-	os.system('./mate.sh')
-	os.system('./mutate{}.sh'.format(breeding_mode))
+gen = 1
+with open(report,'a') as file:
+	while not fixed(pop, haplotype_no, gen > max_generations):
+		pop = mutate( generation(pop, fitness), mutation_on )
 
-	generation += 1
-	os.system('./evolution.sh {} {} {}'.format(generation, trial, destination))
+		file.write('{}\t{}\t{}\n'.format( trial, gen,'\t'.join(['{:.2f}'.format(f) for f in frequency(pop, haplotype_no)]) ) )
 
-	os.system('./report_frequency.sh {} {}'.format(trial, destination))
+		print(trial, gen, sep = '\t')
 
-os.system('rm data.mutant data.mutant.current')
+		gen += 1
+

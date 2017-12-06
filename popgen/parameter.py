@@ -1,18 +1,12 @@
-trials = 1
-population_size = 100
-haplotypes = 2
+trials = 10
+result = 'result'
+
+pop_size = 100
 ploidy = 2
-default_fitness = 1.0
+haplotype_no = 2
+genotype_weight = [0.5,0.5]
+
 fitness_data = 'data.fitness'
+mutation_on = False
 
-max_generation = 100
-
-mutate_max = 30
-
-report_del = ','
-
-breeding_mode = '_fitness'
-
-populate_weight = [0.2, 0.8]
-
-experiment_result = 'result'
+max_generations = 1000
