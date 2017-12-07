@@ -2,7 +2,7 @@ import numpy
 import random
 
 def offspring(a,b):
-	parent = (a,b)
+	parent = (a,b[::-1])
 	l = min(len(a), len(b))
 	return [ parent[random.randint(0,1)][i] for i in range(l) ]
 
@@ -19,7 +19,7 @@ def generation(pop, fitness):
 	weight = fitness_weight(pop, fitness)
 	candidate = list(range(len(pop)))
 	for i in range(len(pop)):
-		k,l = numpy.random.choice(candidate, size = 2, p = weight)
+		k,l = numpy.random.choice(candidate, size = 2, p = weight, replace = False)
 		new_pop.append( offspring(pop[k], pop[l]) )
 
 	return new_pop

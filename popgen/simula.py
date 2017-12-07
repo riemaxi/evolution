@@ -31,14 +31,14 @@ dest = sys.argv[2]
 report = '{}/report.frequency'.format(dest)
 
 fitness = load_fitness(fitness_data)
-pop = population(pop_size, ploidy, haplotype_no, genotype_weight)
+pop = mutate( population(pop_size, ploidy, haplotype_no, genotype_weight), mutation_on )
 
 gen = 1
 with open(report,'a') as file:
 	while not fixed(pop, haplotype_no, gen > max_generations):
 		print_stats(trial, gen, pop, haplotype_no, file )
 
-		pop = mutate( generation(pop, fitness), mutation_on )
+		pop = generation(pop, fitness) 
 
 		gen += 1
 

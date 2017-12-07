@@ -1,12 +1,12 @@
-trials = 10
+trials = 1
 result = 'result'
 
-pop_size = 100
+pop_size = 200
 ploidy = 2
-haplotype_no = 2
-genotype_weight = [0.5,0.5]
+haplotype_no = 1
+genotype_weight = [1]
 
 fitness_data = 'data.fitness'
-mutation_on = False
+mutation_on = True
 
 max_generations = 2000
