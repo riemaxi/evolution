@@ -1,7 +1,7 @@
-trials = 1
+trials = 30
 result = 'result'
 
-pop_size = 200
+pop_size = 30
 ploidy = 2
 haplotype_no = 1
 genotype_weight = [1]
