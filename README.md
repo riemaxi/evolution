@@ -1,2 +1,4 @@
 # evolution
-Evolutionary dynamics
+Evolutionary dynamics 
+
+Focus on implementation of evolutionary dynamic strategies and algorithms
