@@ -14,19 +14,23 @@ def letters(a):
 	return ''.join([letter[int(i)] for i in a])
 
 trial = sys.argv[1]
-root = codes(open(sys.argv[2]).read().strip())
-extant = sys.argv[3]
+a = codes(open(sys.argv[2]).read().strip())
+b = sys.argv[3]
 
-evolution = Evolution(model = HKYModel(mu = 0.1), root = root, mutation_distribution = mutation_distribution, size = seq_size)
+distance = float(sys.argv[4])
+rate = float(sys.argv[5])
 
-gen = 0
+evolution = Evolution(model = HKYModel(mu = 0.1), root = a, mutation_distribution = mutation_distribution, size = seq_size)
+
+t = 0
+step = d*rate
 for mutant in evolution:
 	seq = letters(mutant)
-	print('{}\t{:03}\t{}'.format(trial,gen, seq))
+	print('{}\t{:0.4}\t{}'.format(trial,t, seq))
 
-	gen += 1
+	t += step
 
-	if gen>max_gen:
+	if t > distance:
 		break
 
-open(extant,'w').write(seq + '\n')
+open(b,'w').write(seq + '\n')
