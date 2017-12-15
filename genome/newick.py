@@ -2,8 +2,15 @@
 
 import sys
 
-def newick(tree, distance):
-	return tree
+def newick(rlabel, tree, dmap, d):
+	if len(tree.keys()):
+		tail = []
+		for label in tree.keys():
+			tail.append(newick(label, tree[label], dmap, dmap['{}_{}'.format(rlabel, label)]))
+
+		return '({}):{}'.format(','.join(tail),d) if d != None else '({})'.format(','.join(tail))
+	else:
+		return '{}:{}'.format(rlabel,d)
 
 def ischild(branches, c):
 	for b in branches:
@@ -38,24 +45,28 @@ def tree(root, branches):
 
 	return root
 
-parent = None
-branches = []
-distance = {}
-for line in sys.stdin:
-	p,n,d = line.strip().split('\t')
+def list_nodes():
+	parent = None
+	branches = []
+	distance = {}
+	for line in sys.stdin:
+		p,n,d = line.strip().split('\t')
 
-	if p != parent:
-		if parent != None:
-			branches.append(branch)
+		if p != parent:
+			if parent != None:
+				branches.append(branch)
 
-		parent = p
-		branch = [p, {}]
+			parent = p
+			branch = [p, {}]
 	
-	distance['{}_{}'.format(p,n)] = d
-	branch[1][n] = {}
+		distance['{}_{}'.format(p,n)] = d
+		branch[1][n] = {}
 
-branches.append(branch)
 
-root = root(branches)
-t = tree(root, branches)
-print( newick({ t[0] : t[1]}, distance) )
+	branches.append(branch)
+	return branches, distance
+
+def print_newick():
+	nodes, distance = list_nodes()
+	t = tree(root(nodes), nodes)
+	print( newick(t[0], t[1], distance,None) + ';')
