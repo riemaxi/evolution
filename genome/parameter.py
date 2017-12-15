@@ -1,9 +1,11 @@
-trials = 30
+trials = 2
 result = 'result'
 
 seq_size = 50
-max_gen = 300
+max_gen = 500
 
 model_data = 'data.emodel'
 
 mutation_distribution = [0.2,0.05,0.05,0.7]
+
+root = 'data.root'

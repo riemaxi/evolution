@@ -4,10 +4,10 @@ import random
 from model import *
 
 class Evolution(object):
-	def __init__(self, model , size = 20):
-		self.data = numpy.random.choice(model.bases, size = size).tolist()
-		self.size = size
+	def __init__(self, model , root = None, size =20, mutation_distribution = [0.25]*4):
+		self.data = [int(b) for b in root] if root != None else numpy.random.choice(model.bases, size = size).tolist()
 		self.model = model
+		self.mutation_distribution = mutation_distribution
 	
 	def wildtype(self):
 		return ''.join(self.data)
@@ -16,14 +16,14 @@ class Evolution(object):
 	def substitution(self):
 		i = random.randint(0,len(self.data)-1)
 
-		self.data[i] = self.model.next(self.data[i])
+		self.data[i] = self.model.next(self.data[i], self.generation)
 
 
 	def insertion(self):
 		i = random.randint(0,self.model.size-1)
 		j = random.randint(1,len(self.data))
 
-		seql = numpy.random.choice(list(range(1,self.model.size + 1)), p = [0.15,0.15,0.55,0.15])
+		seql = numpy.random.choice(list(range(1,self.model.size + 1)), p = [0.1,0.1,0.5,0.3])
 		seq = list(numpy.random.choice(self.model.bases, size = seql))
 
 		self.data = self.data[:j] + seq + self.data[j:]
@@ -40,10 +40,11 @@ class Evolution(object):
 		pass
 
 	def mutation(self):
-		return numpy.random.choice([0,1,2,3],p = self.model.mutation_distribution)
+		return numpy.random.choice([0,1,2,3],p = self.mutation_distribution)
 
 	def __iter__(self):
 		numpy.random.seed()
+		self.generation = 1
 
 		return self
 	
@@ -55,5 +56,7 @@ class Evolution(object):
 			self.deletion,
 			self.none
 		][self.mutation()]()
+
+		self.generation += 1
 
 		return ''.join([str(b) for b in self.data])

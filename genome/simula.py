@@ -2,18 +2,31 @@
 
 from parameter import *
 from evolution import *
+from hkymodel import *
+import sys
+
+def codes(a):
+	code = 'AGCT'
+	return [code.index(b) for b in a]	
 
 def letters(a):
-	letter = ['A','C','G','T',]
+	letter = ['A','G','C','T',]
 	return ''.join([letter[int(i)] for i in a])
 
-evolution = Evolution(model = Model(data = 'data.emodel', mutation_distribution = mutation_distribution), size = seq_size)
+trial = sys.argv[1]
+root = codes(open(sys.argv[2]).read().strip())
+extant = sys.argv[3]
+
+evolution = Evolution(model = HKYModel(mu = 0.1), root = root, mutation_distribution = mutation_distribution, size = seq_size)
 
 gen = 0
 for mutant in evolution:
-	print('{0:03}\t{1}'.format(gen, letters(mutant)))
+	seq = letters(mutant)
+	print('{}\t{:03}\t{}'.format(trial,gen, seq))
 
 	gen += 1
 
 	if gen>max_gen:
 		break
+
+open(extant,'w').write(seq + '\n')

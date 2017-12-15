@@ -1,1 +1,1 @@
-./simula.py | grep -e ^000 -e ^300 | ./align.py $1
+./simula.py | grep -e ^000 -e ^$2 | ./align.py $1
