@@ -2,35 +2,26 @@
 
 from parameter import *
 from evolution import *
-from hkymodel import *
+from tn93model import *
 import sys
 
-def codes(a):
-	code = 'AGCT'
-	return [code.index(b) for b in a]	
-
-def letters(a):
-	letter = ['A','G','C','T',]
-	return ''.join([letter[int(i)] for i in a])
+model = TN93Model()
 
 trial = sys.argv[1]
-a = codes(open(sys.argv[2]).read().strip())
+a = model.codes(open(sys.argv[2]).read().strip())
 b = sys.argv[3]
 
 distance = float(sys.argv[4])
 rate = float(sys.argv[5])
 
-evolution = Evolution(model = HKYModel(mu = 0.1), root = a, mutation_distribution = mutation_distribution, size = seq_size)
+destination = sys.argv[6]
 
-t = 0
-step = d*rate
-for mutant in evolution:
-	seq = letters(mutant)
-	print('{}\t{:0.4}\t{}'.format(trial,t, seq))
+evolution = Evolution( step = distance*rate, distance = distance, model = model, root = a, mutation_distribution = mutation_distribution)
 
-	t += step
+with open(destination + '/evolution.{}'.format(trial),'w+') as output:
+	for mutant in evolution:
+		print('{}\t{:0.4f}'.format(trial,evolution.time))
 
-	if t > distance:
-		break
+		output.write('{}\t{:0.4f}\t{}\n'.format(trial,evolution.time, model.letters(mutant)))
 
-open(b,'w').write(seq + '\n')
+open(b,'w').write(model.letters(mutant) + '\n')

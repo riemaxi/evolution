@@ -1,4 +1,4 @@
-trials = 2
+trials = 1
 result = 'result'
 
 seq_size = 50

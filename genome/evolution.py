@@ -4,10 +4,12 @@ import random
 from model import *
 
 class Evolution(object):
-	def __init__(self, model , root = None, size =20, mutation_distribution = [0.25]*4):
-		self.data = [int(b) for b in root] if root != None else numpy.random.choice(model.bases, size = size).tolist()
+	def __init__(self, step, distance, model , root = [0]*10, mutation_distribution = [0.25]*4):
+		self.data = [int(b) for b in root]
 		self.model = model
 		self.mutation_distribution = mutation_distribution
+		self.step = step
+		self.distance = distance
 	
 	def wildtype(self):
 		return ''.join(self.data)
@@ -16,7 +18,7 @@ class Evolution(object):
 	def substitution(self):
 		i = random.randint(0,len(self.data)-1)
 
-		self.data[i] = self.model.next(self.data[i], self.generation)
+		self.data[i] = self.model.next(self.data[i], self.time)
 
 
 	def insertion(self):
@@ -44,7 +46,7 @@ class Evolution(object):
 
 	def __iter__(self):
 		numpy.random.seed()
-		self.generation = 1
+		self.time = 0
 
 		return self
 	
@@ -57,6 +59,9 @@ class Evolution(object):
 			self.none
 		][self.mutation()]()
 
-		self.generation += 1
+		self.time += self.step
 
-		return ''.join([str(b) for b in self.data])
+		if self.time > self.distance:
+			raise StopIteration
+		else:
+			return ''.join([str(b) for b in self.data])
