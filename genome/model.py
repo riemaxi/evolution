@@ -4,6 +4,10 @@ class Model:
 	def __init__(self, data = None):
 		self.load(data)
 
+
+	def divergency(self, a, b):
+		return 0
+	
 	def load(self, data):
 		self.matrix = [[float(p) for p in r.split('\t')] for r in open(data).read().strip().split('\n')]
 		self.size = len(self.matrix[0])

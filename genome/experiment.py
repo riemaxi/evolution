@@ -3,11 +3,11 @@
 from parameter import *
 from tree import navigate
 import os
+import sys
 
 def simula(trial, a, b, d, rate, destination):
 	if b != None:
 		os.system('./simula.py {:03} data.seq.{} data.seq.{} {} {} {}'.format(trial, a, b,d, rate, destination))
-
 
 destination = sys.argv[1] if len(sys.argv)>1 else 'experiment_{}'.format(datetime.datetime.now().microsecond)
 
