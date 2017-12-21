@@ -7,3 +7,5 @@ transpose_begin = 100
 transpose_end = 2501
 
 pack_gap = 5
+pack_polymorphism = False
+
